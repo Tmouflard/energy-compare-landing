@@ -270,6 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentStep = 1;
   const form = document.getElementById('energyForm');
 
+  // Set source value from current URL
   document.querySelector('input[name="source"]').value = window.location.href;
 
   function showStep(step) {
@@ -318,21 +319,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const [firstname = "", lastname = ""] = fullName.split(" ");
-    const firstnameInput = document.createElement('input');
-    firstnameInput.type = 'hidden';
-    firstnameInput.name = 'firstname';
-    firstnameInput.value = firstname;
-    form.appendChild(firstnameInput);
+    formData.append('firstname', firstname);
+    formData.append('lastname', lastname);
 
-    const lastnameInput = document.createElement('input');
-    lastnameInput.type = 'hidden';
-    lastnameInput.name = 'lastname';
-    lastnameInput.value = lastname;
-    form.appendChild(lastnameInput);
+    // Create a temporary form for submission
+    const tempForm = document.createElement('form');
+    tempForm.method = 'POST';
+    tempForm.action = 'https://leadstudio.leadbyte.co.uk/api/submit.php';
+    tempForm.target = '_blank';
 
-    form.submit();
-    
-    // Ajout de la redirection automatique après 1 seconde
+    // Add all form data to the temporary form
+    for (const [key, value] of formData.entries()) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = value;
+      tempForm.appendChild(input);
+    }
+
+    // Add form to body, submit it, and remove it
+    document.body.appendChild(tempForm);
+    tempForm.submit();
+    document.body.removeChild(tempForm);
+
+    // Redirect after a short delay
     setTimeout(() => {
       window.location.href = '/gracias';
     }, 1000);
