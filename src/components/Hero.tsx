@@ -88,7 +88,7 @@ export const Hero = () => {
       
       if (response.ok) {
         console.log("Form submitted successfully");
-        window.location.href = '/gracias';
+        window.location.href = 'https://tarifasdeenergia.com/gracias/';
       } else {
         console.error("Error response from Leadbyte:", response.status, responseData);
         toast.error("Error al enviar el formulario. Por favor, inténtelo de nuevo.");
