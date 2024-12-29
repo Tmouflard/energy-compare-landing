@@ -102,19 +102,26 @@ export const Hero = () => {
   }, [formData, navigate]);
 
   return (
-    <section className="bg-gradient-to-br from-primary to-secondary min-h-[600px] flex items-center text-white py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
-              Encuentra la tarifa de luz más barata
-            </h1>
-            <p className="text-xl mb-8 animate-fade-in opacity-90">
-              Compara las mejores tarifas de luz y ahorra en tu factura
-            </p>
+    <section className="bg-[#3B4694] min-h-screen flex flex-col items-center py-8 px-4">
+      <div className="container mx-auto max-w-6xl">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-[#FFB347] uppercase leading-tight">
+            Compara las mejores ofertas de luz y gas y ahorra hasta un 50% en tu factura
+          </h1>
+        </div>
+        
+        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-3xl mx-auto">
+          <div className="relative">
+            <div className="bg-[#FFB347] py-4 px-6 text-center relative">
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-16 bg-[#1A237E] -skew-x-12"></div>
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-16 bg-[#1A237E] skew-x-12"></div>
+              <p className="text-[#1A237E] text-xl font-semibold">
+                ¡Completa el formulario y recibe todas las tarifas al instante!
+              </p>
+            </div>
           </div>
-          
-          <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 animate-fade-in">
+
+          <div className="p-6 md:p-8">
             <div className="flex justify-between mb-8">
               {[1, 2, 3, 4, 5].map((num) => (
                 <div
@@ -123,14 +130,14 @@ export const Hero = () => {
                 >
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium
-                      ${step >= num ? 'bg-primary text-white' : 'bg-gray-100 text-gray-400'}`}
+                      ${step >= num ? 'bg-[#3B4694] text-white' : 'bg-gray-100 text-gray-400'}`}
                   >
                     {num}
                   </div>
                   {num !== 5 && (
                     <div
                       className={`flex-1 h-1 mx-2 ${
-                        step > num ? 'bg-primary' : 'bg-gray-100'
+                        step > num ? 'bg-[#3B4694]' : 'bg-gray-100'
                       }`}
                     />
                   )}
@@ -138,7 +145,7 @@ export const Hero = () => {
               ))}
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="space-y-6">
               {step === 1 && (
                 <FormStep1 
                   onInputChange={handleInputChange}
