@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   }
 
-  form.addEventListener('submit', async function(e) {
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
     
     const formData = new FormData(form);
@@ -359,24 +359,13 @@ document.addEventListener('DOMContentLoaded', function() {
       tempForm.appendChild(input);
     }
 
-    try {
-      // Append form to body
-      document.body.appendChild(tempForm);
-      
-      // Submit the form
-      tempForm.submit();
-      
-      // Remove the temporary form
-      document.body.removeChild(tempForm);
-      
-      // Wait a brief moment to ensure the form submission has started
-      setTimeout(() => {
-        window.location.href = '/gracias';
-      }, 500);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('Error al enviar el formulario. Por favor, inténtelo de nuevo.');
-    }
+    // Append form to body and submit it
+    document.body.appendChild(tempForm);
+    tempForm.submit();
+    document.body.removeChild(tempForm);
+
+    // Force redirect immediately without waiting for API response
+    window.location.href = '/gracias';
   });
 });
 </script>
