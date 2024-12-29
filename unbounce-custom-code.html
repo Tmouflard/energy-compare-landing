@@ -270,7 +270,6 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentStep = 1;
   const form = document.getElementById('energyForm');
 
-  // Set the source field value
   document.querySelector('input[name="source"]').value = window.location.href;
 
   function showStep(step) {
@@ -332,6 +331,9 @@ document.addEventListener('DOMContentLoaded', function() {
     form.appendChild(lastnameInput);
 
     form.submit();
+    
+    // Redirect after form submission
+    window.location.href = 'https://tarifasdeenergia.com/gracias/';
   });
 });
 </script>
