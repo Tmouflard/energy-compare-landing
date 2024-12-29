@@ -15,7 +15,6 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
   const [phoneError, setPhoneError] = useState("");
   const [postalCodeError, setPostalCodeError] = useState("");
   
-  // Références pour les champs du formulaire
   const postalCodeRef = useRef<HTMLInputElement>(null);
   const cityRef = useRef<HTMLInputElement>(null);
   const fullNameRef = useRef<HTMLInputElement>(null);
@@ -77,14 +76,14 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
 
   const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onInputChange("fullName", e.target.value);
-    if (e.target.value.includes(' ')) { // Vérifie si le nom complet contient au moins un espace
+    if (e.target.value.includes(' ')) {
       emailRef.current?.focus();
     }
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onInputChange("email", e.target.value);
-    if (e.target.value.includes('@')) { // Vérifie si l'email contient @
+    if (e.target.value.includes('@')) {
       phoneRef.current?.focus();
     }
   };
@@ -127,6 +126,8 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
                 onChange={handlePostalCodeChange}
                 className="h-14 text-base bg-white text-gray-900"
                 autoComplete="postal-code"
+                inputMode="numeric"
+                pattern="[0-9]*"
               />
               {postalCodeError && (
                 <p className="text-red-500 text-sm mt-1">{postalCodeError}</p>
@@ -143,6 +144,7 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
                 onChange={handleCityChange}
                 className="h-14 text-base bg-white text-gray-900"
                 autoComplete="address-level2"
+                enterKeyHint="next"
               />
             </div>
 
@@ -156,6 +158,7 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
                 onChange={handleFullNameChange}
                 className="h-14 text-base bg-white text-gray-900"
                 autoComplete="name"
+                enterKeyHint="next"
               />
             </div>
 
@@ -169,6 +172,8 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
                 onChange={handleEmailChange}
                 className="h-14 text-base bg-white text-gray-900"
                 autoComplete="email"
+                inputMode="email"
+                enterKeyHint="next"
               />
             </div>
 
@@ -182,6 +187,8 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
                 onChange={handlePhoneChange}
                 className="h-14 text-base bg-white text-gray-900"
                 autoComplete="tel"
+                inputMode="tel"
+                enterKeyHint="done"
               />
               {phoneError && (
                 <p className="text-red-500 text-sm mt-1">{phoneError}</p>
