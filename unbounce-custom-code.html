@@ -308,19 +308,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const postalCode = formData.get('postcode');
     const fullName = formData.get('fullName');
     
-    // Validation du téléphone
     if (!validateSpanishPhone(phone)) {
       alert('Por favor, introduzca un número de teléfono español válido (+34XXXXXXXXX)');
       return;
     }
 
-    // Validation du code postal
     if (!validateSpanishPostalCode(postalCode)) {
       alert('Por favor, introduzca un código postal español válido (5 dígitos)');
       return;
     }
 
-    // Split name into firstname and lastname
     const [firstname = "", lastname = ""] = fullName.split(" ");
     const firstnameInput = document.createElement('input');
     firstnameInput.type = 'hidden';
@@ -334,13 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
     lastnameInput.value = lastname;
     form.appendChild(lastnameInput);
 
-    // Submit the form traditionally
     form.submit();
-
-    // Redirect after a short delay to our new thank you page
-    setTimeout(() => {
-      window.location.href = 'https://tarifasdeenergia.com/gracias/';
-    }, 1000);
   });
 });
 </script>

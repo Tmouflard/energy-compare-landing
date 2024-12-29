@@ -35,7 +35,6 @@ export const Hero = () => {
     e.preventDefault();
     console.log("Form submission started with data:", formData);
     
-    // Validation basique
     if (!formData.phone || !formData.email || !formData.postalCode || !formData.fullName) {
       console.error("Missing required fields");
       toast.error("Por favor, rellene todos los campos obligatorios");
@@ -50,7 +49,6 @@ export const Hero = () => {
     
     const form = new FormData();
     
-    // Ajout des champs au FormData avec logging
     const appendToForm = (key: string, value: string) => {
       form.append(key, value);
       console.log(`Appending to form: ${key} = ${value}`);
@@ -88,7 +86,7 @@ export const Hero = () => {
       
       if (response.ok) {
         console.log("Form submitted successfully");
-        window.location.href = 'https://tarifasdeenergia.com/gracias/';
+        toast.success("Formulario enviado con éxito");
       } else {
         console.error("Error response from Leadbyte:", response.status, responseData);
         toast.error("Error al enviar el formulario. Por favor, inténtelo de nuevo.");
