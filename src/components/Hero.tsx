@@ -88,7 +88,12 @@ export const Hero = () => {
       
       if (response.ok) {
         console.log("Form submitted successfully");
-        toast.success("Formulario enviado con éxito");
+        
+        // Afficher le message de remerciement
+        toast.success("¡Gracias por su solicitud! Nos pondremos en contacto con usted lo antes posible.", {
+          duration: 5000,
+          className: "bg-primary text-white",
+        });
         
         // Reset form
         setFormData({
@@ -105,8 +110,6 @@ export const Hero = () => {
         });
         setStep(1);
         
-        // Redirection
-        window.location.href = 'https://tucomparadorenergetico.com/energia-gracias-1/';
       } else {
         console.error("Error response from Leadbyte:", response.status, responseData);
         toast.error("Error al enviar el formulario. Por favor, inténtelo de nuevo.");
