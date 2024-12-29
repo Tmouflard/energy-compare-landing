@@ -106,7 +106,7 @@ export const Hero = () => {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-[#FFB347] uppercase leading-tight">
-            Compara las mejores ofertas de luz y gas y ahorra hasta un 50% en tu factura
+            COMPARA LAS MEJORES OFERTAS DE LUZ Y GAS Y AHORRA HASTA UN 50% EN TU FACTURA
           </h1>
         </div>
         
