@@ -33,7 +33,6 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
   };
 
   const validateSpanishPostalCode = (postalCode: string) => {
-    // Le code postal espagnol doit avoir 5 chiffres et commencer par 01-52
     const spanishPostalCodeRegex = /^(?:0[1-9]|[1-4][0-9]|5[0-2])[0-9]{3}$/;
     
     if (!spanishPostalCodeRegex.test(postalCode)) {
@@ -91,10 +90,11 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
               <Label className="text-sm text-gray-600 mb-2 block">Tu código postal</Label>
               <Input
                 type="text"
-                name="postalCode"
+                name="postal-code"
                 placeholder="Código postal"
                 onChange={handlePostalCodeChange}
                 className="h-14 text-base bg-white text-gray-900"
+                autoComplete="postal-code"
               />
               {postalCodeError && (
                 <p className="text-red-500 text-sm mt-1">{postalCodeError}</p>
@@ -105,9 +105,11 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
               <Label className="text-sm text-gray-600 mb-2 block">Tu ciudad</Label>
               <Input
                 type="text"
+                name="address-level2"
                 placeholder="Ciudad"
                 onChange={(e) => onInputChange("city", e.target.value)}
                 className="h-14 text-base bg-white text-gray-900"
+                autoComplete="address-level2"
               />
             </div>
 
@@ -115,9 +117,11 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
               <Label className="text-sm text-gray-600 mb-2 block">Tu nombre y apellidos</Label>
               <Input
                 type="text"
+                name="name"
                 placeholder="Nombre completo"
                 onChange={(e) => onInputChange("fullName", e.target.value)}
                 className="h-14 text-base bg-white text-gray-900"
+                autoComplete="name"
               />
             </div>
 
@@ -125,9 +129,11 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
               <Label className="text-sm text-gray-600 mb-2 block">Tu email</Label>
               <Input
                 type="email"
+                name="email"
                 placeholder="Email"
                 onChange={(e) => onInputChange("email", e.target.value)}
                 className="h-14 text-base bg-white text-gray-900"
+                autoComplete="email"
               />
             </div>
 
@@ -135,9 +141,11 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
               <Label className="text-sm text-gray-600 mb-2 block">Tu teléfono</Label>
               <Input
                 type="tel"
+                name="tel"
                 placeholder="+34XXXXXXXXX"
                 onChange={handlePhoneChange}
                 className="h-14 text-base bg-white text-gray-900"
+                autoComplete="tel"
               />
               {phoneError && (
                 <p className="text-red-500 text-sm mt-1">{phoneError}</p>
