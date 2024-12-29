@@ -303,12 +303,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function validateSpanishPhone(phone) {
     const spanishPhoneRegex = /^\+34[0-9]{9}$/;
-    return spanishPhoneRegex.test(phone);
+    if (!phone.startsWith('+34')) {
+      return { isValid: false, message: 'El número debe comenzar con +34' };
+    }
+    return { 
+      isValid: spanishPhoneRegex.test(phone), 
+      message: spanishPhoneRegex.test(phone) ? '' : 'Por favor, introduzca un número de teléfono español válido (+34XXXXXXXXX)' 
+    };
   }
 
   function validateSpanishPostalCode(postalCode) {
     const spanishPostalCodeRegex = /^(?:0[1-9]|[1-4][0-9]|5[0-2])[0-9]{3}$/;
-    return spanishPostalCodeRegex.test(postalCode);
+    return { 
+      isValid: spanishPostalCodeRegex.test(postalCode), 
+      message: spanishPostalCodeRegex.test(postalCode) ? '' : 'Por favor, introduzca un código postal español válido (5 dígitos)' 
+    };
   }
 
   form.addEventListener('submit', function(e) {
@@ -319,13 +328,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const postalCode = formData.get('postcode');
     const fullName = formData.get('fullName');
     
-    if (!validateSpanishPhone(phone)) {
-      alert('Por favor, introduzca un número de teléfono español válido (+34XXXXXXXXX)');
+    const phoneValidation = validateSpanishPhone(phone);
+    if (!phoneValidation.isValid) {
+      alert(phoneValidation.message);
       return;
     }
 
-    if (!validateSpanishPostalCode(postalCode)) {
-      alert('Por favor, introduzca un código postal español válido (5 dígitos)');
+    const postalCodeValidation = validateSpanishPostalCode(postalCode);
+    if (!postalCodeValidation.isValid) {
+      alert(postalCodeValidation.message);
       return;
     }
 
