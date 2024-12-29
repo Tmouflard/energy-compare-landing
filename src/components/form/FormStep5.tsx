@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { toast } from "sonner";
 
 interface FormStep5Props {
@@ -14,6 +14,14 @@ interface FormStep5Props {
 export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
   const [phoneError, setPhoneError] = useState("");
   const [postalCodeError, setPostalCodeError] = useState("");
+  
+  // Références pour les champs du formulaire
+  const postalCodeRef = useRef<HTMLInputElement>(null);
+  const cityRef = useRef<HTMLInputElement>(null);
+  const fullNameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const gdprRef = useRef<HTMLButtonElement>(null);
 
   const validateSpanishPhone = (phone: string) => {
     const spanishPhoneRegex = /^\+34[0-9]{9}$/;
@@ -48,6 +56,7 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
     const phone = e.target.value;
     if (validateSpanishPhone(phone)) {
       onInputChange("phone", phone);
+      gdprRef.current?.focus();
     }
   };
 
@@ -55,13 +64,35 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
     const postalCode = e.target.value;
     if (validateSpanishPostalCode(postalCode)) {
       onInputChange("postalCode", postalCode);
+      cityRef.current?.focus();
+    }
+  };
+
+  const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onInputChange("city", e.target.value);
+    if (e.target.value) {
+      fullNameRef.current?.focus();
+    }
+  };
+
+  const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onInputChange("fullName", e.target.value);
+    if (e.target.value.includes(' ')) { // Vérifie si le nom complet contient au moins un espace
+      emailRef.current?.focus();
+    }
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onInputChange("email", e.target.value);
+    if (e.target.value.includes('@')) { // Vérifie si l'email contient @
+      phoneRef.current?.focus();
     }
   };
 
   const handleSubmitWithValidation = (e: React.FormEvent) => {
     e.preventDefault();
     const phoneInput = document.querySelector('input[type="tel"]') as HTMLInputElement;
-    const postalCodeInput = document.querySelector('input[name="postalCode"]') as HTMLInputElement;
+    const postalCodeInput = document.querySelector('input[name="postal-code"]') as HTMLInputElement;
     
     const isPhoneValid = validateSpanishPhone(phoneInput.value);
     const isPostalCodeValid = validateSpanishPostalCode(postalCodeInput.value);
@@ -89,6 +120,7 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
             <div>
               <Label className="text-sm text-gray-600 mb-2 block">Tu código postal</Label>
               <Input
+                ref={postalCodeRef}
                 type="text"
                 name="postal-code"
                 placeholder="Código postal"
@@ -104,10 +136,11 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
             <div>
               <Label className="text-sm text-gray-600 mb-2 block">Tu ciudad</Label>
               <Input
+                ref={cityRef}
                 type="text"
                 name="address-level2"
                 placeholder="Ciudad"
-                onChange={(e) => onInputChange("city", e.target.value)}
+                onChange={handleCityChange}
                 className="h-14 text-base bg-white text-gray-900"
                 autoComplete="address-level2"
               />
@@ -116,10 +149,11 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
             <div>
               <Label className="text-sm text-gray-600 mb-2 block">Tu nombre y apellidos</Label>
               <Input
+                ref={fullNameRef}
                 type="text"
                 name="name"
                 placeholder="Nombre completo"
-                onChange={(e) => onInputChange("fullName", e.target.value)}
+                onChange={handleFullNameChange}
                 className="h-14 text-base bg-white text-gray-900"
                 autoComplete="name"
               />
@@ -128,10 +162,11 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
             <div>
               <Label className="text-sm text-gray-600 mb-2 block">Tu email</Label>
               <Input
+                ref={emailRef}
                 type="email"
                 name="email"
                 placeholder="Email"
-                onChange={(e) => onInputChange("email", e.target.value)}
+                onChange={handleEmailChange}
                 className="h-14 text-base bg-white text-gray-900"
                 autoComplete="email"
               />
@@ -140,6 +175,7 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
             <div>
               <Label className="text-sm text-gray-600 mb-2 block">Tu teléfono</Label>
               <Input
+                ref={phoneRef}
                 type="tel"
                 name="tel"
                 placeholder="+34XXXXXXXXX"
@@ -158,6 +194,7 @@ export const FormStep5 = ({ onInputChange, onSubmit }: FormStep5Props) => {
           <Checkbox
             id="gdpr"
             className="mt-1"
+            ref={gdprRef}
             onCheckedChange={(checked) => onInputChange("gdprConsent", checked as boolean)}
           />
           <Label htmlFor="gdpr" className="text-sm leading-tight text-gray-900">
