@@ -331,6 +331,11 @@ document.addEventListener('DOMContentLoaded', function() {
     form.appendChild(lastnameInput);
 
     form.submit();
+    
+    // Ajout de la redirection automatique après 1 seconde
+    setTimeout(() => {
+      window.location.href = '/gracias';
+    }, 1000);
   });
 });
 </script>
