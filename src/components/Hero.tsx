@@ -23,65 +23,98 @@ export const Hero = () => {
 
   const handleInputChange = useCallback((field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    console.log(`Field ${field} updated with value:`, value);
   }, []);
 
   const handleNext = useCallback(() => {
     setStep(prev => prev + 1);
-  }, []);
+    console.log("Moving to step:", step + 1);
+  }, [step]);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Form submission started with data:", formData);
+    
+    // Validation basique
+    if (!formData.phone || !formData.email || !formData.postalCode || !formData.fullName) {
+      console.error("Missing required fields");
+      toast.error("Por favor, rellene todos los campos obligatorios");
+      return;
+    }
+
+    if (!formData.gdprConsent) {
+      console.error("GDPR consent not given");
+      toast.error("Por favor, acepte las condiciones generales");
+      return;
+    }
     
     const form = new FormData();
     
-    form.append('returnjson', 'yes');
-    form.append('campid', 'GAZELEC-ESPAGNE');
+    // Ajout des champs au FormData avec logging
+    const appendToForm = (key: string, value: string) => {
+      form.append(key, value);
+      console.log(`Appending to form: ${key} = ${value}`);
+    };
     
-    form.append('typeform', formData.houseType);
-    form.append('particulier', formData.clientType);
-    form.append('fournisseur_actuel', formData.currentCompany);
-    form.append('postcode', formData.postalCode);
-    form.append('towncity', formData.city);
+    appendToForm('returnjson', 'yes');
+    appendToForm('campid', 'GAZELEC-ESPAGNE');
+    appendToForm('typeform', formData.houseType);
+    appendToForm('particulier', formData.clientType);
+    appendToForm('fournisseur_actuel', formData.currentCompany);
+    appendToForm('postcode', formData.postalCode);
+    appendToForm('towncity', formData.city);
     
     const [firstname = "", lastname = ""] = formData.fullName.split(" ");
-    form.append('firstname', firstname);
-    form.append('lastname', lastname);
+    appendToForm('firstname', firstname);
+    appendToForm('lastname', lastname);
     
-    form.append('email', formData.email);
-    form.append('phone1', formData.phone);
+    appendToForm('email', formData.email);
+    appendToForm('phone1', formData.phone);
     
-    form.append('source', window.location.href);
-    form.append('type_energie', 'electricite');
-    form.append('objectif_recherche', 'economiser');
-    form.append('b2b', 'no');
+    appendToForm('source', window.location.href);
+    appendToForm('type_energie', 'electricite');
+    appendToForm('objectif_recherche', 'economiser');
+    appendToForm('b2b', 'no');
     
     try {
+      console.log("Sending form to Leadbyte...");
       const response = await fetch('https://leadstudio.leadbyte.co.uk/api/submit.php', {
         method: 'POST',
         body: form
       });
       
-      toast.success("Formulaire envoyé avec succès !");
+      const responseData = await response.text();
+      console.log("Leadbyte response:", responseData);
       
-      setFormData({
-        clientType: "",
-        houseType: "",
-        currentCompany: "",
-        monthlyBill: "",
-        postalCode: "",
-        city: "",
-        fullName: "",
-        email: "",
-        phone: "",
-        gdprConsent: false
-      });
-      setStep(1);
-      
-      window.location.href = 'https://tucomparadorenergetico.com/energia-gracias-1/';
+      if (response.ok) {
+        console.log("Form submitted successfully");
+        toast.success("Formulario enviado con éxito");
+        
+        // Reset form
+        setFormData({
+          clientType: "",
+          houseType: "",
+          currentCompany: "",
+          monthlyBill: "",
+          postalCode: "",
+          city: "",
+          fullName: "",
+          email: "",
+          phone: "",
+          gdprConsent: false
+        });
+        setStep(1);
+        
+        // Redirection
+        window.location.href = 'https://tucomparadorenergetico.com/energia-gracias-1/';
+      } else {
+        console.error("Error response from Leadbyte:", response.status, responseData);
+        toast.error("Error al enviar el formulario. Por favor, inténtelo de nuevo.");
+      }
       
     } catch (error) {
-      console.error('Error:', error);
-      toast.error("Une erreur est survenue lors de l'envoi du formulaire.");
+      console.error('Error submitting form:', error);
+      toast.error("Error al enviar el formulario. Por favor, inténtelo de nuevo.");
     }
   }, [formData]);
 
