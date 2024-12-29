@@ -88,28 +88,7 @@ export const Hero = () => {
       
       if (response.ok) {
         console.log("Form submitted successfully");
-        
-        // Afficher le message de remerciement
-        toast.success("¡Gracias por su solicitud! Nos pondremos en contacto con usted lo antes posible.", {
-          duration: 5000,
-          className: "bg-primary text-white",
-        });
-        
-        // Reset form
-        setFormData({
-          clientType: "",
-          houseType: "",
-          currentCompany: "",
-          monthlyBill: "",
-          postalCode: "",
-          city: "",
-          fullName: "",
-          email: "",
-          phone: "",
-          gdprConsent: false
-        });
-        setStep(1);
-        
+        window.location.href = '/gracias';
       } else {
         console.error("Error response from Leadbyte:", response.status, responseData);
         toast.error("Error al enviar el formulario. Por favor, inténtelo de nuevo.");
