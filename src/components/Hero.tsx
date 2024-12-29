@@ -5,8 +5,10 @@ import { FormStep3 } from "./form/FormStep3";
 import { FormStep4 } from "./form/FormStep4";
 import { FormStep5 } from "./form/FormStep5";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     clientType: "",
@@ -87,6 +89,7 @@ export const Hero = () => {
       if (response.ok) {
         console.log("Form submitted successfully");
         toast.success("Formulario enviado con éxito");
+        navigate('/gracias');
       } else {
         console.error("Error response from Leadbyte:", response.status, responseData);
         toast.error("Error al enviar el formulario. Por favor, inténtelo de nuevo.");
@@ -96,7 +99,7 @@ export const Hero = () => {
       console.error('Error submitting form:', error);
       toast.error("Error al enviar el formulario. Por favor, inténtelo de nuevo.");
     }
-  }, [formData]);
+  }, [formData, navigate]);
 
   return (
     <section className="bg-gradient-to-br from-primary to-secondary min-h-[600px] flex items-center text-white py-12">
