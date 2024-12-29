@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "sonner";
+import { Header } from "../components/Header";
 
 const Index = () => {
   const [step, setStep] = useState(1);
@@ -77,15 +78,8 @@ const Index = () => {
     <main className="min-h-screen bg-gradient-to-br from-primary to-secondary">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
-          <header className="text-center text-white mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Encuentra la tarifa de luz más barata
-            </h1>
-            <p className="text-xl opacity-90">
-              Compara las mejores tarifas de luz y ahorra en tu factura
-            </p>
-          </header>
-
+          <Header />
+          
           <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8">
             <div className="flex justify-between mb-8">
               {[1, 2, 3, 4, 5].map((num) => (
