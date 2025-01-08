@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -349,6 +350,7 @@ const Index = () => {
           </footer>
         </div>
       </div>
+      <Footer />
     </main>
   );
 };
