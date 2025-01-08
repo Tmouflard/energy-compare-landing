@@ -9,19 +9,19 @@ export const Footer = () => {
             to="/mentions-legales" 
             className="hover:text-white transition-colors"
           >
-            Mentions légales
+            Aviso legal
           </Link>
           <Link 
             to="/conditions-generales" 
             className="hover:text-white transition-colors"
           >
-            Conditions générales d'utilisation
+            Condiciones generales de uso
           </Link>
           <Link 
             to="/politique-confidentialite" 
             className="hover:text-white transition-colors"
           >
-            Politique de confidentialité
+            Política de privacidad
           </Link>
         </div>
       </div>
